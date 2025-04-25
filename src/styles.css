@@ -55,7 +55,7 @@ code {
     font-size: 0.9em;
 }
 
-.copy-btn {
+.copy-btn, .reload-btn {
     margin-left: 5px;
     background: none;
     border: none;
@@ -69,7 +69,7 @@ code {
     width: 20px;
 }
 
-.copy-btn .icon {
+.copy-btn, .reload-btn .icon {
     width: 16px;
     height: 16px;
     stroke: currentColor;
