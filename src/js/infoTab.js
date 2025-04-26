@@ -1,5 +1,14 @@
+import { state } from './state.js';
 import { resolveIPs } from './dns.js';
 import { formatAndCopy } from './utils.js'
+
+const presets = {
+    ping: "ping %d",
+    trace4: "traceroute %i4",
+    trace6: "traceroute %i6",
+    dig: "dig +short %d"
+};
+
 // For reloading all the event listeners
 export function bindInfoTabListeners() {
     // For copying the formatted strings
@@ -23,9 +32,9 @@ export function bindInfoTabListeners() {
         console.log("PresetValue: ", presetValue)
         if (presetValue) {
             formatInput.value = presetValue
-                .replace(/%d/g, domainVal)
-                .replace(/%i4/g, ipv4Val)
-                .replace(/%i6/g, ipv6Val);
+                .replace(/%d/g, state.domainVal)
+                .replace(/%i4/g, state.ipv4Val)
+                .replace(/%i6/g, state.ipv6Val);
         }
     });
 
@@ -34,13 +43,13 @@ export function bindInfoTabListeners() {
         document.getElementById("updatedMSG").style = "display: inline-block";
         document.getElementById('ipv4').textContent = "...";
         document.getElementById('ipv6').textContent = "...";
-        resolveIPs(domainVal, function (addresses) {
+        resolveIPs(state.domainVal, function (addresses) {
 
             document.getElementById('ipv4').textContent = addresses["ipv4"];
             document.getElementById('ipv6').textContent = addresses["ipv6"];
 
-            ipv4Val = addresses["ipv4"];
-            ipv6Val = addresses["ipv6"];
+            state.ipv4Val = addresses["ipv4"];
+            state.ipv6Val = addresses["ipv6"];
         });
         setTimeout(() => {
             document.getElementById("updatedMSG").style = "display: none";
